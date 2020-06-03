@@ -14,38 +14,54 @@ const useStyles = makeStyles({
     float: "left",
   },
   icon: {
-    marginRight: "1%",
+    fontSize: 18,
+    marginTop: "auto",
     float: "right",
     color: "black",
   },
   title: {
     clear: "both",
+    float: "left",
   },
-  pos: {
-    marginBottom: 12,
+  checkBox: {
+    clear: "both",
+    float: "left",
+  },
+
+  percent: {
+    color: "#00BB00",
+    float: "right",
   },
 });
 
 export default function TodoCard(props) {
   const classes = useStyles();
-
+  const data = props.data;
   return (
     <Card className={classes.root}>
       <CardContent>
         <Typography className={classes.date} color="textSecondary" gutterBottom>
-          {props.data.date}
+          {data.date} &middot; {data.name} &middot; {data.isPublic}
         </Typography>
+
         <Icon className={classes.icon} color="primary">
           settings
         </Icon>
-        <Typography className={classes.title} variant="h5" component="h2">
-          {props.data.title}
+
+        <Typography className={classes.title} variant="h6">
+          {data.title}
         </Typography>
-        {props.data.todo.map((todo) => {
+        <Typography className={classes.percent} variant="h6">
+          99%
+        </Typography>
+
+        {data.todo.map((todo) => {
           return (
-            <div>
-              <FormControlLabel control={<Checkbox />} label={todo} />
-            </div>
+            <FormControlLabel
+              className={classes.checkBox}
+              control={<Checkbox />}
+              label={todo}
+            />
           );
         })}
       </CardContent>
