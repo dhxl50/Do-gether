@@ -37,6 +37,7 @@ const useStyles = makeStyles({
 export default function TodoCard(props) {
   const classes = useStyles();
   const data = props.data;
+  console.log(data);
   return (
     <Card className={classes.root}>
       <CardContent>
