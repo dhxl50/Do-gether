@@ -8,15 +8,17 @@ import Icon from "@material-ui/core/Icon";
 import TodoCard from "./TodoCard.js";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
+  root:{
+    backgroundColor:"rgba(0,0,0,0.5)"
+  },
+  container: {
     flexGrow: 1,
-    backgroundColor: "#e9e9e9",
-    paddingTop: "4rem",
-    marginTop: "0",
+    paddingTop:"4rem",
+    paddingBottom:"1rem",
+    marginLeft: "auto",
+    marginRight: "auto"
   },
   item: {
-    marginLeft: "auto",
-    marginRight: "auto",
   },
 }));
 
@@ -37,13 +39,12 @@ export default function BodyLayout() {
   });
 
   if (!data) {
-    return <p>ㄱㄷㄱㄷ</p>;
+    return <p>Loading....</p>;
   } else {
-    console.log(123);
-    console.log(data);
     return (
-      <Container className={classes.root} maxwidth="sm">
-        <Grid className={classes.item} container spacing={3}>
+      <div className={classes.root}>
+      <Container className={classes.container} maxwidth="md">
+        <Grid className={classes.item} container spacing={0}>
           {data.map((data) => {
             return (
               <Grid item xs="6" sm="6" md="3">
@@ -56,6 +57,7 @@ export default function BodyLayout() {
           </Grid>
         </Grid>
       </Container>
+      </div>
     );
   }
 }

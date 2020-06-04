@@ -8,14 +8,15 @@ import Checkbox from "@material-ui/core/Checkbox";
 import Icon from "@material-ui/core/Icon";
 
 const useStyles = makeStyles({
-  root: {},
+  root: {
+    margin:10
+  },
   date: {
     fontSize: 14,
     float: "left",
   },
   icon: {
     fontSize: 18,
-    marginTop: "auto",
     float: "right",
     color: "black",
   },
@@ -37,7 +38,6 @@ const useStyles = makeStyles({
 export default function TodoCard(props) {
   const classes = useStyles();
   const data = props.data;
-  console.log(data);
   return (
     <Card className={classes.root}>
       <CardContent>
