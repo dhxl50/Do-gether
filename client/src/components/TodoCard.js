@@ -42,7 +42,7 @@ export default function TodoCard(props) {
     <Card className={classes.root}>
       <CardContent>
         <Typography className={classes.date} color="textSecondary" gutterBottom>
-          {data.date} &middot; {data.name} &middot; {data.isPublic}
+          {data.date} &middot; {data.name}
         </Typography>
 
         <Icon className={classes.icon} color="primary">
