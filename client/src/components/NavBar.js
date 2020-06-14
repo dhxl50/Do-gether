@@ -33,9 +33,9 @@ export default function ButtonAppBar() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            Fuck
+            Do-gether
           </Typography>
-          <Button color="inherit">Login</Button>
+          <Button color="inherit">Logout</Button>
         </Toolbar>
       </AppBar>
     </div>

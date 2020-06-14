@@ -3,15 +3,17 @@ import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+
 import Icon from "@material-ui/core/Icon";
-import CircularProgress from "@material-ui/core/CircularProgress";
+// import CircularProgress from "@material-ui/core/CircularProgress";
 
 import TodoCard from "./TodoCard.js";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    minHeight:"100vh",
-    backgroundColor: "rgba(1,0,0,0.5)"
+    minHeight: "100vh",
+    backgroundColor: "rgba(0,0,0,0.5)",
   },
   container: {
     flexGrow: 1,
@@ -19,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: "1rem",
     marginLeft: "auto",
     marginRight: "auto",
-  }
+  },
 }));
 
 export default function BodyLayout() {
@@ -31,7 +33,7 @@ export default function BodyLayout() {
   const callApi = async () => {
     const response = await fetch("/api/cards");
     const body = await response.json();
-    return body;
+    return body.reverse();
   };
 
   useEffect(() => {
@@ -44,27 +46,35 @@ export default function BodyLayout() {
   }, []);
 
   if (isLoading) {
-    return (
-      <>
-        <CircularProgress />
-      </>
-    );
+    return <></>;
   } else {
     return (
       <div className={classes.root}>
         <Container className={classes.container} maxwidth="md">
           <Grid className={classes.item} container>
-            {data.map((data) => {
-              return (
-                <Grid item xs={6} sm={6} md={3}>
-                  <TodoCard id={data.id} data={data} />
-                </Grid>
-              );
+            {data.map((card, idx) => {
+              if (idx===0 || card.date !== data[idx - 1].date) {
+                return (
+                  <>
+                  <Typography variant="h4" style={{width:"100%", color:"white"}}>{card.date}</Typography>
+                    <Grid item xs={6} sm={6} md={3}>
+                      <TodoCard key={card.id} data={card} />
+                    </Grid>
+                  </>
+                );
+              } else {
+                return (
+                  <Grid item xs={6} sm={6} md={3}>
+                    <TodoCard key={card.id} data={card} />
+                  </Grid>
+                );
+              }
             })}
-            <hr width="100%" height="19%" color="white" />
-            <Grid item xs={6} sm={6} md={3}>
+
+            {/* <Grid item xs={6} sm={6} md={3}>
               <Icon style={{ fontSize: 60 }}>add_circle</Icon>
-            </Grid>
+            </Grid> */}
+
           </Grid>
         </Container>
       </div>

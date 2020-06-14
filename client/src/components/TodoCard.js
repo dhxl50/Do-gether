@@ -41,7 +41,7 @@ export default function TodoCard(props) {
   const todo = data.todo.split(",");
   const isTrue = "1";
   const check = data.ck.split(",").map((ck) => {
-    return isTrue == ck;
+    return isTrue === ck;
   });
 
   return (
