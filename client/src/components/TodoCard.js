@@ -9,7 +9,7 @@ import Icon from "@material-ui/core/Icon";
 
 const useStyles = makeStyles({
   root: {
-    margin:10
+    margin: 10,
   },
   date: {
     fontSize: 14,
@@ -38,6 +38,12 @@ const useStyles = makeStyles({
 export default function TodoCard(props) {
   const classes = useStyles();
   const data = props.data;
+  const todo = data.todo.split(",");
+  const isTrue = "1";
+  const check = data.ck.split(",").map((ck) => {
+    return isTrue == ck;
+  });
+
   return (
     <Card className={classes.root}>
       <CardContent>
@@ -52,16 +58,18 @@ export default function TodoCard(props) {
         <Typography className={classes.title} variant="h6">
           {data.title}
         </Typography>
-        <Typography className={classes.percent} variant="h6">
-          99%
-        </Typography>
 
-        {data.todo.map((todo) => {
+        {/* <Typography className={classes.percent} variant="h6">
+          99%
+        </Typography> */}
+
+        {todo.map((item, idx) => {
           return (
             <FormControlLabel
               className={classes.checkBox}
               control={<Checkbox />}
-              label={todo}
+              checked={check[idx]}
+              label={item}
             />
           );
         })}

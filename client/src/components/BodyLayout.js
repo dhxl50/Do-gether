@@ -10,6 +10,7 @@ import TodoCard from "./TodoCard.js";
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    minHeight:"100vh",
     backgroundColor: "rgba(1,0,0,0.5)"
   },
   container: {
@@ -18,12 +19,12 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: "1rem",
     marginLeft: "auto",
     marginRight: "auto",
-  },
-  item: {},
+  }
 }));
 
 export default function BodyLayout() {
   const classes = useStyles();
+
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(1);
 
@@ -56,7 +57,7 @@ export default function BodyLayout() {
             {data.map((data) => {
               return (
                 <Grid item xs={6} sm={6} md={3}>
-                  <TodoCard data={data} id={data.date}/>
+                  <TodoCard id={data.id} data={data} />
                 </Grid>
               );
             })}
