@@ -22,6 +22,12 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: "auto",
     marginRight: "auto",
   },
+  date: {
+    width: "100%",
+    paddingLeft: "1rem",
+    paddingTop: "1rem",
+    color: "white",
+  },
 }));
 
 export default function BodyLayout() {
@@ -40,6 +46,7 @@ export default function BodyLayout() {
     callApi()
       .then((res) => {
         setData(res);
+        console.log(res);
         setIsLoading(0);
       })
       .catch((err) => console.log(err));
@@ -53,28 +60,45 @@ export default function BodyLayout() {
         <Container className={classes.container} maxwidth="md">
           <Grid className={classes.item} container>
             {data.map((card, idx) => {
-              if (idx===0 || card.date !== data[idx - 1].date) {
+              let isVisible = card.isPublic;
+              let showDate = null;
+              const isMine = card.name === "aa"; ////data.name과 session name 비교 로그인 구현하고 수정
+
+              
+              if (idx === 0 || card.date !== data[idx - 1].date) {
+                showDate=(
+                  <Typography variant="h4" className={classes.date}>
+                    {card.date}
+                  </Typography>
+                );
+              }
+              
+              if (isMine) {
+                isVisible = 1;
+              }
+
+              if (isVisible === 1) {
                 return (
                   <>
-                  <Typography variant="h4" style={{width:"100%", color:"white"}}>{card.date}</Typography>
+                    {showDate}
                     <Grid item xs={6} sm={6} md={3}>
-                      <TodoCard key={card.id} data={card} />
+                      <TodoCard
+                        key={card.id}
+                        data={card}
+                        isVisible={isVisible}
+                        isMine={isMine}
+                      />
                     </Grid>
                   </>
                 );
               } else {
-                return (
-                  <Grid item xs={6} sm={6} md={3}>
-                    <TodoCard key={card.id} data={card} />
-                  </Grid>
-                );
+                return <>{ showDate }</>;
               }
             })}
 
             {/* <Grid item xs={6} sm={6} md={3}>
               <Icon style={{ fontSize: 60 }}>add_circle</Icon>
             </Grid> */}
-
           </Grid>
         </Container>
       </div>

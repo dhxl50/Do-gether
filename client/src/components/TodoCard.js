@@ -35,15 +35,22 @@ const useStyles = makeStyles({
   },
 });
 
-export default function TodoCard(props) {
+export default function TodoCard({ data, isMine, isVisible }) {
   const classes = useStyles();
-  const data = props.data;
   const todo = data.todo.split(",");
-  const isTrue = "1";
   const check = data.ck.split(",").map((ck) => {
-    return isTrue === ck;
+    return parseInt(ck);
   });
 
+  let settingButton = null;
+
+  if (isMine) {
+    settingButton = (
+      <Icon className={classes.icon} color="primary">
+        settings
+      </Icon>
+    );
+  }
   return (
     <Card className={classes.root}>
       <CardContent>
@@ -51,18 +58,14 @@ export default function TodoCard(props) {
           {data.date} &middot; {data.name}
         </Typography>
 
-        <Icon className={classes.icon} color="primary">
-          settings
-        </Icon>
+        {settingButton}
 
         <Typography className={classes.title} variant="h6">
           {data.title}
         </Typography>
-
         {/* <Typography className={classes.percent} variant="h6">
           99%
         </Typography> */}
-
         {todo.map((item, idx) => {
           return (
             <FormControlLabel
