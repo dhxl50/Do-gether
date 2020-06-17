@@ -6,6 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import Icon from "@material-ui/core/Icon";
+import IconButton from "@material-ui/core/IconButton";
 
 const useStyles = makeStyles({
   root: {
@@ -15,9 +16,13 @@ const useStyles = makeStyles({
     fontSize: 14,
     float: "left",
   },
-  icon: {
-    fontSize: 18,
+  iconButton: {
     float: "right",
+    margin: "0",
+    padding: "0",
+  },
+  icon: {
+    fontSize: 16,
     color: "black",
   },
   title: {
@@ -46,9 +51,11 @@ export default function TodoCard({ data, isMine, isVisible }) {
 
   if (isMine) {
     settingButton = (
-      <Icon className={classes.icon} color="primary">
-        settings
-      </Icon>
+      <IconButton className={classes.iconButton}>
+        <Icon className={classes.icon} color="primary" on>
+          settings
+        </Icon>
+      </IconButton>
     );
   }
   return (

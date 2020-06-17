@@ -6,13 +6,14 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 
 import Icon from "@material-ui/core/Icon";
+import IconButton from "@material-ui/core/IconButton";
 // import CircularProgress from "@material-ui/core/CircularProgress";
 
 import TodoCard from "./TodoCard.js";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    minHeight: "100vh",
+    minHeight: "100%",
     backgroundColor: "rgba(0,0,0,0.5)",
   },
   container: {
@@ -26,6 +27,17 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     paddingLeft: "1rem",
     paddingTop: "1rem",
+    color: "white",
+  },
+  iconButton: {
+    margin: "0",
+    padding: "0",
+    position: "fixed",
+    bottom: "3rem",
+    right: "3rem",
+  },
+  icon: {
+    fontSize: 70,
     color: "white",
   },
 }));
@@ -64,15 +76,14 @@ export default function BodyLayout() {
               let showDate = null;
               const isMine = card.name === "aa"; ////data.name과 session name 비교 로그인 구현하고 수정
 
-              
               if (idx === 0 || card.date !== data[idx - 1].date) {
-                showDate=(
+                showDate = (
                   <Typography variant="h4" className={classes.date}>
                     {card.date}
                   </Typography>
                 );
               }
-              
+
               if (isMine) {
                 isVisible = 1;
               }
@@ -92,7 +103,7 @@ export default function BodyLayout() {
                   </>
                 );
               } else {
-                return <>{ showDate }</>;
+                return <>{showDate}</>;
               }
             })}
 
@@ -100,6 +111,10 @@ export default function BodyLayout() {
               <Icon style={{ fontSize: 60 }}>add_circle</Icon>
             </Grid> */}
           </Grid>
+
+          <IconButton className={classes.iconButton}>
+            <Icon className={classes.icon}>add_circle</Icon>
+          </IconButton>
         </Container>
       </div>
     );
