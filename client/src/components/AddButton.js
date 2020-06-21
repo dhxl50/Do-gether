@@ -7,7 +7,7 @@ import Icon from "@material-ui/core/Icon";
 import IconButton from "@material-ui/core/IconButton";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import Typography from '@material-ui/core/Typography';
+import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles((theme) => ({
   iconButton: {
@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   },
   icon: {
     fontSize: 70,
-    color: "black"
+    color: "black",
   },
 
   paper: {
@@ -35,12 +35,12 @@ const useStyles = makeStyles((theme) => ({
       width: "30ch",
     },
   },
-  button:{
-    '& > *': {
+  button: {
+    "& > *": {
       margin: theme.spacing(1),
-      float:"right"
+      float: "right",
     },
-  }
+  },
 }));
 
 function getModalStyle() {
@@ -64,27 +64,6 @@ export default function AddButton() {
     setOpen(false);
   };
 
-  const body = (
-    <div style={modalStyle} className={classes.paper}>
-      <Typography variant="h5">ADD TODO LIST</Typography>
-      
-      <form className={classes.input} noValidate autoComplete="off">
-        <TextField id="standard-basic" label="Title" />
-        <TextField id="standard-basic" label="Todo 1" />
-        <TextField id="standard-basic" label="Todo 1" />
-      </form>
-
-      <form className={classes.button}>
-        <Button variant="outlined" color="primary" onClick={handleClose}>
-          확인
-        </Button>
-        <Button variant="outlined" color="secondary" onClick={handleClose}>
-          취소
-        </Button>
-      </form>
-    </div>
-  );
-
   return (
     <>
       <IconButton className={classes.iconButton} onClick={handleOpen}>
@@ -95,7 +74,24 @@ export default function AddButton() {
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
       >
-        {body}
+        <div style={modalStyle} className={classes.paper}>
+          <Typography variant="h5">ADD TODO LIST</Typography>
+
+          <form className={classes.input} noValidate autoComplete="off">
+            <TextField id="standard-basic" label="Title" />
+            <TextField id="standard-basic" label="Todo 1" />
+            <TextField id="standard-basic" label="Todo 1" />
+          </form>
+
+          <form className={classes.button}>
+            <Button variant="outlined" color="primary" onClick={handleClose}>
+              확인
+            </Button>
+            <Button variant="outlined" color="secondary" onClick={handleClose}>
+              취소
+            </Button>
+          </form>
+        </div>
       </Modal>
     </>
   );

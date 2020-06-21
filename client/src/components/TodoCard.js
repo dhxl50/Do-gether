@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
@@ -30,14 +30,23 @@ const useStyles = makeStyles({
   },
 });
 
+
 export default function TodoCard({ data, isMine, isVisible }) {
   const classes = useStyles();
+  const [render, setRender] = useState(0);
   const todo = data.todo.split(",");
-  const check = data.ck.split(",").map((ck) => {
+  const [checkState, setCheckState] = useState(data.ck.split(",").map((ck) => {
     return parseInt(ck);
-  });
-
+  }))
   let settingButton = null;
+
+  const handleCheck = (idx) => {
+    let tempArr = checkState;
+    tempArr[idx] = tempArr[idx]?0:1;
+    setCheckState(tempArr);
+    setRender([]);
+  };
+
 
   if (isMine) {
     settingButton = (
@@ -56,15 +65,16 @@ export default function TodoCard({ data, isMine, isVisible }) {
         <Typography className={classes.title} variant="h6">
           {data.title}
         </Typography>
-        {/* <Typography className={classes.percent} variant="h6">
-          99%
-        </Typography> */}
+        <Typography className={classes.percent} variant="h6">
+
+          {checkState.reduce((a, b) => a + b)}/{checkState.length}
+        </Typography>
         {todo.map((item, idx) => {
           return (
             <FormControlLabel
               className={classes.checkBox}
-              control={<Checkbox/>}
-              checked={check[idx]}
+              control={<Checkbox onClick={e=>(handleCheck(idx))}/>}
+              checked={checkState[idx]}
               label={item}
             />
           );
