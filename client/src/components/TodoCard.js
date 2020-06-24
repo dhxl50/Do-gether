@@ -72,7 +72,6 @@ export default function TodoCard({ data, isMine}) {
           {checkState.reduce((a, b) => a + b)}/{checkState.length}
         </Typography>
         {todo.map((item, idx) => {
-          console.log(item);
           return (
             <FormControlLabel
               className={classes.checkBox}

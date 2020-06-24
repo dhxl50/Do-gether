@@ -72,7 +72,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AddButton({ handleClose }) {
   const classes = useStyles();
-  const initCk = new Array(3,0);
   const [title, setTitle] = useState("");
   const [date, setDate] = useState(new Date());
   const [isPublic, setIsPublic] = useState(1);
@@ -82,7 +81,6 @@ export default function AddButton({ handleClose }) {
   ]);
 
   const addApi = (data) => {
-    console.log(data);
     return fetch("/api/addcard", {
       method: "POST",
       headers: {
