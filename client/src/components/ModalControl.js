@@ -70,9 +70,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function AddButton({ state, handleClose }) {
+export default function AddButton({ handleClose }) {
   const classes = useStyles();
+  const initCk = new Array(3,0);
   const [title, setTitle] = useState("");
+  const [date, setDate] = useState(new Date());
   const [isPublic, setIsPublic] = useState(1);
   const [textList, setTextList] = useState(new Array());
   const [textFieldBody, setTextFieldBody] = useState([
@@ -80,6 +82,7 @@ export default function AddButton({ state, handleClose }) {
   ]);
 
   const addApi = (data) => {
+    console.log(data);
     return fetch("/api/addcard", {
       method: "POST",
       headers: {
@@ -89,16 +92,25 @@ export default function AddButton({ state, handleClose }) {
     }).then((response) => response.json());
   };
 
-  //   const initData = () => {
-  //     const initArr = new Array("","","","","");
-  //     setTitle("");
-  //     setIsPublic(1);
-  //     setTextList(initArr);
-  //     console.log(textList,1);
-  //     setTextFieldBody([
-  //       <TextField required label="To do 1" onChange={(e) => handleText(e, 0)} />,
-  //     ]);
-  //   };
+  const checkAndClose = () => {
+    if (title === "") {
+      alert("Please enter a title!");
+    } else if (checkEemptyList(textList)) {
+      alert("Please fill in the blank!");
+    } else {
+      const initCK = Array.apply(null, Array(textList.length)).map(Number.prototype.valueOf,0);
+      addApi({
+        isPublic: isPublic,
+        name: "testName",
+        date: date.toLocaleDateString(),
+        time: date.toLocaleTimeString(),
+        title: title,
+        todo: textList.join(","),
+        ck: initCK.join(","),
+      });
+      handleClose();
+    }
+  };
 
   const checkEemptyList = (arr) => {
     if (arr.length === 0) {
@@ -110,18 +122,6 @@ export default function AddButton({ state, handleClose }) {
       }
     }
     return 0;
-  };
-
-  const checkAndClose = () => {
-    if (title === "") {
-      alert("Please enter a title!");
-    } else if (checkEemptyList(textList)) {
-      alert("Please fill in the blank!");
-    } else {
-      //initData();
-      console.log(textList);
-      handleClose();
-    }
   };
 
   const handleTitle = (e) => {

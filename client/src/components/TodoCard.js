@@ -31,14 +31,13 @@ const useStyles = makeStyles({
 });
 
 
-export default function TodoCard({ data, isMine, isVisible }) {
+export default function TodoCard({ data, isMine}) {
   const classes = useStyles();
   const [render, setRender] = useState(0);
-  const todo = data.todo.split(",").slice(0,-1).map((text)=>{
+  const todo = data.todo.split(",").map((text)=>{
       return text;
   });
-  console.log(todo);
-  const [checkState, setCheckState] = useState(data.ck.split(",").slice(0,-1).map((ck) => {
+  const [checkState, setCheckState] = useState(data.ck.split(",").map((ck) => {
       return parseInt(ck);
   }))
   let settingButton = null;
@@ -59,8 +58,8 @@ export default function TodoCard({ data, isMine, isVisible }) {
   return (
     <Card className={classes.root}>
       <CardContent>
-        <Typography className={classes.date} color="textSecondary" gutterBottom>
-          {data.date} &middot; {data.name}
+        <Typography className={classes.date}  gutterBottom> {/*color="textSecondary"*/}
+           {data.name} &middot; {data.time} 
         </Typography>
 
         {settingButton}
@@ -73,6 +72,7 @@ export default function TodoCard({ data, isMine, isVisible }) {
           {checkState.reduce((a, b) => a + b)}/{checkState.length}
         </Typography>
         {todo.map((item, idx) => {
+          console.log(item);
           return (
             <FormControlLabel
               className={classes.checkBox}

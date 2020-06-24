@@ -2,15 +2,8 @@ import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import ModalControl from "./ModalControl.js";
 
-import Modal from "@material-ui/core/Modal";
 import Icon from "@material-ui/core/Icon";
 import IconButton from "@material-ui/core/IconButton";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
-import AddIcon from "@material-ui/icons/Add";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
 
 const useStyles = makeStyles((theme) => ({
   iconButton: {
@@ -49,7 +42,6 @@ export default function AddButton() {
   };
 
   const handleClose = () => {
-    console.log(1);
     setOpen(false);
   };
 
@@ -64,7 +56,7 @@ export default function AddButton() {
   } else {
     return (
       <>
-        <ModalControl state={open} handleClose={handleClose} />
+        <ModalControl handleClose={handleClose} />
       </>
     );
   }
