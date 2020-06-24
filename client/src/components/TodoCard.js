@@ -34,9 +34,12 @@ const useStyles = makeStyles({
 export default function TodoCard({ data, isMine, isVisible }) {
   const classes = useStyles();
   const [render, setRender] = useState(0);
-  const todo = data.todo.split(",");
-  const [checkState, setCheckState] = useState(data.ck.split(",").map((ck) => {
-    return parseInt(ck);
+  const todo = data.todo.split(",").slice(0,-1).map((text)=>{
+      return text;
+  });
+  console.log(todo);
+  const [checkState, setCheckState] = useState(data.ck.split(",").slice(0,-1).map((ck) => {
+      return parseInt(ck);
   }))
   let settingButton = null;
 
