@@ -61,36 +61,3 @@ export default function AddButton() {
     );
   }
 }
-
-/* <Modal
-        open={open}
-      >
-        <div className={classes.paper}>
-          <Typography className={classes.title} variant="h5">
-            ADD TODO LIST
-          </Typography>
-          <FormControlLabel
-            className={classes.isPublic}
-            control={<Checkbox onClick={handlePublic} />}
-            checked={isPublic}
-            label="Public"
-          />
-
-          <form className={classes.input} noValidate autoComplete="off">
-            <TextField required label="Title" onChange={handleTitle} />
-            {textFieldBody.map((field) => field)}
-          </form>
-          <IconButton className={classes.addButton} onClick={handleAdd}>
-            <AddIcon />
-          </IconButton>
-
-          <form className={classes.buttonGroup}>
-            <Button variant="contained" color="primary" onClick={handleClose}>
-              확인
-            </Button>
-            <Button variant="contained" color="secondary" onClick={handleClose}>
-              취소
-            </Button>
-          </form>
-        </div>
-      </Modal> */

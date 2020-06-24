@@ -1,0 +1,110 @@
+import React, { useState } from "react";
+
+import { makeStyles } from "@material-ui/core/styles";
+import { Link } from "react-router-dom";
+
+import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    position: "fixed",
+    minHeight: "100vh",
+    minWidth: "100vw",
+    backgroundColor: "rgba(0,0,0,0.8)",
+  },
+  paper: {
+    width: "25rem",
+    height: "28rem",
+    marginTop: "8rem",
+    marginLeft: "auto",
+    marginRight: "auto",
+    backgroundColor: "rgba(255,255,255,0.8)",
+  },
+  grid: {
+    "& > *": {
+      position: "relative",
+      marginLeft: "auto",
+      marginRight: "auto",
+    },
+  },
+  title: {
+    width: "100%",
+    marginTop: "5rem",
+    fontSize: 40,
+    textAlign: "center",
+  },
+  idInput: {
+    top: "3.5rem",
+    width: "70%",
+  },
+  pwInput: {
+    top: "5.5rem",
+    width: "70%",
+  },
+  signin: {
+    top: "7.4rem",
+    width: "70%",
+  },
+  signup: {
+    fontSize: 13,
+    top: "7.9rem",
+  },
+}));
+
+export default function LandingPage() {
+  const classes = useStyles();
+
+  const [userID, setUserID] = useState();
+  const [NickName, setNickName] = useState();
+  const [userPW, setUserPW] = useState();
+  const [checkPW, setCheckPW] = useState();
+
+  return (
+    <div className={classes.root}>
+      <Paper className={classes.paper} elevation={3}>
+        <Grid container className={classes.grid}>
+          <div className={classes.title}>SIGN IN</div>
+          <TextField
+            required
+            className={classes.idInput}
+            label="ID"
+            variant="outlined"
+            size="small"
+          />
+          <TextField
+            required
+            className={classes.idInput}
+            label="ID"
+            variant="outlined"
+            size="small"
+          />
+          <TextField
+            required
+            className={classes.pwInput}
+            label="Password"
+            type="password"
+            autoComplete="current-password"
+            variant="outlined"
+            size="small"
+          />
+          <TextField
+            required
+            className={classes.pwInput}
+            label="Password"
+            type="password"
+            autoComplete="current-password"
+            variant="outlined"
+            size="small"
+          />
+          <Button className={classes.signin} variant="outlined" size="small">
+            Login
+          </Button>
+          <div className={classes.signup}>Click here to SIGN UP</div>
+        </Grid>
+      </Paper>
+    </div>
+  );
+}
