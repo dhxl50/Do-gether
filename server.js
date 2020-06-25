@@ -5,6 +5,9 @@ const app = express();
 
 const port = process.env.PORT || 5000;
 
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+
 const data = fs.readFileSync("./database.json");
 const conf = JSON.parse(data);
 const mysql = require("mysql");
@@ -32,6 +35,27 @@ app.post("/api/addcard", (req, res) => {
   const data = req.body;
   const sql = "INSERT INTO CARDINFO(isPublic,name,date,time,title,todo,ck) VALUES(?,?,?,?,?,?,?);";
   const params =[data.isPublic,data.name,data.date,data.time,data.title,data.todo,data.ck];
+  connection.query(sql, params, (err, rows, fields) => {
+    if (err) {
+      res.send({
+        code: 400,
+        message: "error",
+      });
+    } else {
+      res.send({
+        code: 200,
+        message: "success",
+      });
+    }
+  });
+});
+
+app.post("/api/signup", (req, res) => {
+  const data = req.body;
+  
+  console.log(data);
+  const sql = "INSERT INTO USERINFO(userID,userPW,userName) VALUES(?,?,?);";
+  const params =[data.userID,data.userPW,data.userName];
   connection.query(sql, params, (err, rows, fields) => {
     if (err) {
       res.send({

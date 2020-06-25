@@ -49,8 +49,8 @@ const useStyles = makeStyles((theme) => ({
     width: "70%",
   },
   signup: {
-    fontSize: 13,
     top: "7.9rem",
+    fontSize: 13,
   },
 }));
 

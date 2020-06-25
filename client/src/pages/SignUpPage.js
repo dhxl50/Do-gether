@@ -32,54 +32,96 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     width: "100%",
-    marginTop: "5rem",
+    marginTop: "3.5rem",
     fontSize: 40,
     textAlign: "center",
   },
   idInput: {
-    top: "3.5rem",
+    top: "2rem",
+    width: "70%",
+  },
+  nameItput: {
+    top: "3rem",
     width: "70%",
   },
   pwInput: {
-    top: "5.5rem",
+    top: "4rem",
     width: "70%",
   },
-  signin: {
-    top: "7.4rem",
+  pwCheck: {
+    top: "5rem",
     width: "70%",
   },
-  signup: {
+  submit: {
+    top: "6.5rem",
+    width: "70%",
+  },
+  login: {
+    top: "7rem",
     fontSize: 13,
-    top: "7.9rem",
   },
 }));
 
-export default function LandingPage() {
+export default function LandingPage(props) {
   const classes = useStyles();
 
   const [userID, setUserID] = useState();
-  const [NickName, setNickName] = useState();
+  const [nickName, setNickName] = useState();
   const [userPW, setUserPW] = useState();
   const [checkPW, setCheckPW] = useState();
+  const [matchPW, setMatchPW] = useState(false);
+
+  const signUpApi = (data) => {
+    return fetch("/api/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }).then((response) => response.json());
+  };
+
+  const handleSubmit = () => {
+    if (!userID || !nickName || !userPW || !checkPW) {
+      alert("All blanks must be filled. Try agian.");
+    }else if (matchPW === true){
+        alert("Passwords do not match.");
+    } 
+    else {
+        signUpApi({
+            userID: userID,
+            userPW: userPW,
+            userName: nickName,
+          });
+      alert("Successfully registered!");
+      props.history.push("/login");
+    }
+  };
 
   return (
     <div className={classes.root}>
       <Paper className={classes.paper} elevation={3}>
         <Grid container className={classes.grid}>
-          <div className={classes.title}>SIGN IN</div>
+          <div className={classes.title}>SIGN UP</div>
           <TextField
             required
             className={classes.idInput}
             label="ID"
             variant="outlined"
             size="small"
+            onChange={(e) => {
+              setUserID(e.target.value);
+            }}
           />
           <TextField
             required
-            className={classes.idInput}
-            label="ID"
+            className={classes.nameItput}
+            label="NickName"
             variant="outlined"
             size="small"
+            onChange={(e) => {
+              setNickName(e.target.value);
+            }}
           />
           <TextField
             required
@@ -89,20 +131,42 @@ export default function LandingPage() {
             autoComplete="current-password"
             variant="outlined"
             size="small"
+            onChange={(e) => {
+              setUserPW(e.target.value);
+            }}
           />
           <TextField
             required
-            className={classes.pwInput}
-            label="Password"
+            error={matchPW}
+            className={classes.pwCheck}
+            label="Re-enter Password"
             type="password"
             autoComplete="current-password"
             variant="outlined"
             size="small"
+            onChange={(e) => {
+              const value = e.target.value;
+              setCheckPW(value);
+              if (value !== userPW) {
+                setMatchPW(true);
+              } else {
+                setMatchPW(false);
+              }
+            }}
           />
-          <Button className={classes.signin} variant="outlined" size="small">
-            Login
+          <Button
+            className={classes.submit}
+            variant="outlined"
+            size="small"
+            onClick={handleSubmit}
+          >
+            Submit
           </Button>
-          <div className={classes.signup}>Click here to SIGN UP</div>
+          <div className={classes.login}>
+            <Link to="/login" style={{ color: "gray", textDecoration: "none" }}>
+              Click here to return to the login page
+            </Link>
+          </div>
         </Grid>
       </Paper>
     </div>

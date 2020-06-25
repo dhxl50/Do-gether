@@ -75,7 +75,7 @@ export default function AddButton({ handleClose }) {
   const [title, setTitle] = useState("");
   const [date, setDate] = useState(new Date());
   const [isPublic, setIsPublic] = useState(1);
-  const [textList, setTextList] = useState(new Array());
+  const [textList, setTextList] = useState([]);
   const [textFieldBody, setTextFieldBody] = useState([
     <TextField required label="To do 1" onChange={(e) => handleText(e, 0)} />,
   ]);
