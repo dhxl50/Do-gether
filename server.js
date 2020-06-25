@@ -8,7 +8,6 @@ const port = process.env.PORT || 5000;
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
-
 const data = fs.readFileSync("./database.json");
 const conf = JSON.parse(data);
 const mysql = require("mysql");
@@ -98,7 +97,10 @@ app.post("/api/login", (req, res) => {
       } else {
           // console.log('The solution is: ', results);
           if(results.length > 0) {
-              if(results[0].userID == password) {
+            bcrypt.compare(enteredPW, results[0].userPW, function(err, check) {
+              console.log(check);
+              if(check) {
+                console.log("sec")
                   res.send({
                       "code": 200,
                       "success": "login sucessfull"
@@ -106,9 +108,10 @@ app.post("/api/login", (req, res) => {
               } else {
                   res.send({
                       "code": 204,
-                      "success": "Email and password does not match"
+                      "success": "id and password does not match."
                   });
               }
+            });
           } else {
               res.send({
                   "code":204,
@@ -117,6 +120,5 @@ app.post("/api/login", (req, res) => {
           }
       }    
   }) 
-}
-
+});
 app.listen(port, () => console.log(`Listening on port ${port}`));

@@ -54,11 +54,36 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function LandingPage() {
+
+export default function LandingPage(props) {
   const classes = useStyles();
 
   const [userID, setUserID] = useState();
   const [userPW, setUserPW] = useState();
+
+  const loginApi = (data) => {
+    return fetch("/api/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }).then((response) => response.json());
+  };
+  
+  const handleLogin = () => {
+    if (!userID || !userPW) {
+      alert("All blanks must be filled. Try agian.");
+    }
+    else {
+      loginApi({
+            userID: userID,
+            userPW: userPW,
+          });
+      alert("Successfully login!");
+      props.history.push("/login");
+    }
+  };
 
   return (
     <div className={classes.root}>
@@ -85,7 +110,7 @@ export default function LandingPage() {
               setUserPW(e.target.value);
             }}
           />
-          <Button className={classes.signin} variant="outlined" size="small">
+          <Button className={classes.signin} variant="outlined" size="small" onClick={handleLogin}>
             Login
           </Button>
           <div className={classes.signup}>
