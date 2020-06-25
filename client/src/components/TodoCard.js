@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
@@ -30,58 +30,82 @@ const useStyles = makeStyles({
   },
 });
 
-
-export default function TodoCard({ data, isMine}) {
+export default function TodoCard({ data, isMine }) {
   const classes = useStyles();
+  const [open, setOpen] = useState(false);
   const [render, setRender] = useState(0);
-  const todo = data.todo.split(",").map((text)=>{
-      return text;
+  const todo = data.todo.split(",").map((text) => {
+    return text;
   });
-  const [checkState, setCheckState] = useState(data.ck.split(",").map((ck) => {
+  const [checkState, setCheckState] = useState(
+    data.ck.split(",").map((ck) => {
       return parseInt(ck);
-  }))
-  let settingButton = null;
+    })
+  );
 
   const handleCheck = (idx) => {
-    let tempArr = checkState;
-    tempArr[idx] = tempArr[idx]?0:1;
+    if(localStorage["userName"]===data.name)
+    {
+      let tempArr = checkState;
+    tempArr[idx] = tempArr[idx] ? 0 : 1;
     setCheckState(tempArr);
     setRender([]);
+    modifyApi({
+      isPublic: data.isPublic,
+      name: localStorage["userName"],
+      date: data.date,
+      time: data.time,
+      title: data.title,
+      todo: data.todo,
+      ck: tempArr.join(",")
+    });
+    
+    }else{
+      alert("You can't modify other people's list.");
+    }
+    
+    
   };
 
+  const modifyApi = (data) => {
+    return fetch("/api/updatecard", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }).then((response) => response.json());
+  };
 
-  if (isMine) {
-    settingButton = (
-      <SettingButton></SettingButton>
-    );
-  }
   return (
-    <Card className={classes.root}>
-      <CardContent>
-        <Typography className={classes.date}  gutterBottom> {/*color="textSecondary"*/}
-           {data.name} &middot; {data.time} 
-        </Typography>
+    <>
+      <Card className={classes.root}>
+        <CardContent>
+          <Typography className={classes.date} gutterBottom>
+            {" "}
+            {data.name} &middot; {data.time}
+          </Typography>
 
-        {settingButton}
+          <SettingButton isMine={isMine} data={data}></SettingButton>
 
-        <Typography className={classes.title} variant="h6">
-          {data.title}
-        </Typography>
-        <Typography className={classes.percent} variant="h6">
-
-          {checkState.reduce((a, b) => a + b)}/{checkState.length}
-        </Typography>
-        {todo.map((item, idx) => {
-          return (
-            <FormControlLabel
-              className={classes.checkBox}
-              control={<Checkbox onClick={e=>(handleCheck(idx))}/>}
-              checked={checkState[idx]}
-              label={item}
-            />
-          );
-        })}
-      </CardContent>
-    </Card>
+          <Typography className={classes.title} variant="h6">
+            {data.title}
+          </Typography>
+          <Typography className={classes.percent} variant="h6">
+            {checkState.reduce((a, b) => a + b)}/{checkState.length}
+          </Typography>
+          {todo.map((item, idx) => {
+            return (
+              <FormControlLabel
+                className={classes.checkBox}
+                control={<Checkbox onClick={(e) => handleCheck(idx)} />}
+                checked={checkState[idx]}
+                label={item}
+              />
+            );
+          })}
+        </CardContent>
+      </Card>
+    </>
   );
 }

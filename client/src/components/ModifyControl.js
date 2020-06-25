@@ -70,19 +70,29 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function AddButton({ handleClose }) {
+export default function AddButton({ data, handleClose }) {
   const classes = useStyles();
-  const [title, setTitle] = useState("");
-  const [date, setDate] = useState(new Date());
-  const [isPublic, setIsPublic] = useState(1);
-  const [textList, setTextList] = useState([]);
-  const [textFieldBody, setTextFieldBody] = useState([
-    <TextField required label="To do 1" onChange={(e) => handleText(e, 0)} />,
-  ]);
+  const [title, setTitle] = useState(data.title);
+  //const [date, setDate] = useState(new Date());
+  const [isPublic, setIsPublic] = useState(data.isPublic);
+  const [textList, setTextList] = useState(data.todo.split(","));
+  const [textFieldBody, setTextFieldBody] = useState(
+    textList.map((text, idx) => {
+      return (
+        <TextField
+          required
+          fullWidth={true}
+          defaultValue={textList[idx]}
+          label={"To do " + (idx + 1)}
+          onChange={(e) => handleText(e, idx)}
+        />
+      );
+    })
+  );
 
-  const addApi = (data) => {
-    return fetch("/api/addcard", {
-      method: "POST",
+  const modifyApi = (data) => {
+    return fetch("/api/updatecard", {
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
@@ -96,12 +106,15 @@ export default function AddButton({ handleClose }) {
     } else if (checkEemptyList(textList)) {
       alert("Please fill in the blank!");
     } else {
-      const initCK = Array.apply(null, Array(textList.length)).map(Number.prototype.valueOf,0);
-      addApi({
+      const initCK = Array.apply(null, Array(textList.length)).map(
+        Number.prototype.valueOf,
+        0
+      );
+      modifyApi({
         isPublic: isPublic,
         name: localStorage["userName"],
-        date: date.toLocaleDateString(),
-        time: date.toLocaleTimeString(),
+        date: data.date,
+        time: data.time,
         title: title,
         todo: textList.join(","),
         ck: initCK.join(","),
@@ -157,7 +170,7 @@ export default function AddButton({ handleClose }) {
       <Modal open={true}>
         <div className={classes.paper}>
           <Typography className={classes.title} variant="h5">
-            ADD TODO LIST
+            MODIFY TODO
           </Typography>
           <FormControlLabel
             className={classes.isPublic}
@@ -167,7 +180,7 @@ export default function AddButton({ handleClose }) {
           />
 
           <form className={classes.input} noValidate autoComplete="off">
-            <TextField required label="Title" onChange={handleTitle} />
+            <TextField required label="Title" onChange={handleTitle} defaultValue={data.title}/>
             {textFieldBody.map((field) => field)}
           </form>
           <IconButton className={classes.addButton} onClick={handleAdd}>
@@ -176,10 +189,10 @@ export default function AddButton({ handleClose }) {
 
           <form className={classes.buttonGroup}>
             <Button variant="contained" color="primary" onClick={checkAndClose}>
-              확인
+              수정
             </Button>
             <Button variant="contained" color="secondary" onClick={handleClose}>
-              취소
+              삭제
             </Button>
           </form>
         </div>

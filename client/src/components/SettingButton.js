@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
+import ModifyControl from "./ModifyControl.js";
 
 import { makeStyles } from "@material-ui/core/styles";
-
 import Icon from "@material-ui/core/Icon";
 import IconButton from "@material-ui/core/IconButton";
 
@@ -17,16 +17,35 @@ const useStyles = makeStyles({
   },
 });
 
-export default function SettingButton() {
+export default function SettingButton({data, isMine }) {
   const classes = useStyles();
+  const [open, setOpen] = useState();
 
-  return (
-    <>
-    <IconButton className={classes.iconButton}>
-        <Icon className={classes.icon}>
-          settings
-        </Icon>
-      </IconButton>
-    </>
-  );
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  if (isMine) {
+    if (!open) {
+      return (
+        <>
+          <IconButton className={classes.iconButton} onClick={handleOpen}>
+            <Icon className={classes.icon}>settings</Icon>
+          </IconButton>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <ModifyControl handleClose={handleClose} data={data}/>
+        </>
+      );
+    }
+  } else {
+    return <></>;
+  }
 }

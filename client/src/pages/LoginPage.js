@@ -68,7 +68,14 @@ export default function LandingPage(props) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
-    }).then((response) => response.json());
+    }).then((response) => response.json())
+    .then(result => {
+      if(result.success === 'login sucessfull') {
+        localStorage.userName = result.username;
+        window.location.href = '/main';
+        
+      }
+    });
   };
   
   const handleLogin = () => {

@@ -73,8 +73,7 @@ export default function BodyLayout() {
             {data.map((card, idx) => {
               let isVisible = card.isPublic;
               let showDate = null;
-              const isMine = card.name === "aa"; ////data.name과 session name 비교 로그인 구현하고 수정
-
+              const isMine = card.name === localStorage["userName"]; //remove item
               if (idx === 0 || card.date !== data[idx - 1].date) {
                 showDate = (
                   <Typography variant="h4" className={classes.date}>
@@ -105,10 +104,6 @@ export default function BodyLayout() {
                 return <>{showDate}</>;
               }
             })}
-
-            {/* <Grid item xs={6} sm={6} md={3}>
-              <Icon style={{ fontSize: 60 }}>add_circle</Icon>
-            </Grid> */}
           </Grid>
           <AddButton></AddButton>
         </Container>
