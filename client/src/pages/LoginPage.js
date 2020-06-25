@@ -16,7 +16,8 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "rgba(0,0,0,0.8)",
   },
   paper: {
-    width: "25rem",
+    width: "80%",
+    maxWidth:"25rem",
     height: "28rem",
     marginTop: "8rem",
     marginLeft: "auto",

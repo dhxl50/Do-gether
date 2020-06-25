@@ -10,13 +10,14 @@ import SettingButton from "./SettingButton.js";
 
 const useStyles = makeStyles({
   root: {
-    margin: 10,
+    margin: "0.5rem",
   },
   date: {
-    fontSize: 14,
+    fontSize: "0.8rem",
     float: "left",
   },
   title: {
+    fontSize: "1.4rem",
     clear: "both",
     float: "left",
   },

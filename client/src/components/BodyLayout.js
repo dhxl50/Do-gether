@@ -90,7 +90,7 @@ export default function BodyLayout() {
                 return (
                   <>
                     {showDate}
-                    <Grid item xs={6} sm={6} md={3}>
+                    <Grid item xs={12} sm={6} md={3}>
                       <TodoCard
                         key={card.id}
                         data={card}

@@ -120,6 +120,7 @@ export default function AddButton({ data, handleClose }) {
         ck: initCK.join(","),
       });
       handleClose();
+      window.location.reload(false);
     }
   };
 
