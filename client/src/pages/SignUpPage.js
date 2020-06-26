@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     width: "80%",
-    maxWidth:"25rem",
+    maxWidth: "25rem",
     height: "28rem",
     marginTop: "8rem",
     marginLeft: "auto",
@@ -79,23 +79,29 @@ export default function LandingPage(props) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
-    }).then((response) => response.json());
+    })
+      .then((response) => response.json())
+      .then((result) => {
+        if (result.message === "success") {
+          alert("Successfully registered!");
+          props.history.push("/login");
+        } else {
+          alert(result.message);
+        }
+      });
   };
 
   const handleSubmit = () => {
     if (!userID || !nickName || !userPW || !checkPW) {
       alert("All blanks must be filled. Try agian.");
-    }else if (matchPW === true){
-        alert("Passwords do not match.");
-    } 
-    else {
-        signUpApi({
-            userID: userID,
-            userPW: userPW,
-            userName: nickName,
-          });
-      alert("Successfully registered!");
-      props.history.push("/login");
+    } else if (matchPW === true) {
+      alert("Passwords do not match.");
+    } else {
+      signUpApi({
+        userID: userID,
+        userPW: userPW,
+        userName: nickName,
+      });
     }
   };
 

@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     width: "80%",
-    maxWidth:"25rem",
+    maxWidth: "25rem",
     height: "28rem",
     marginTop: "8rem",
     marginLeft: "auto",
@@ -55,7 +55,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
 export default function LandingPage(props) {
   const classes = useStyles();
 
@@ -69,25 +68,26 @@ export default function LandingPage(props) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
-    }).then((response) => response.json())
-    .then(result => {
-      if(result.success === 'login sucessfull') {
-        localStorage.userName = result.username;
-        window.location.href = '/main';
-        
-      }
-    });
+    })
+      .then((response) => response.json())
+      .then((result) => {
+        if (result.message === "login sucessfull") {
+          localStorage.userName = result.username;
+          window.location.href = "/main";
+        } else {
+          alert(result.message);
+        }
+      });
   };
-  
+
   const handleLogin = () => {
     if (!userID || !userPW) {
       alert("All blanks must be filled. Try agian.");
-    }
-    else {
+    } else {
       loginApi({
-            userID: userID,
-            userPW: userPW,
-          });
+        userID: userID,
+        userPW: userPW,
+      });
       alert("Successfully login!");
       props.history.push("/login");
     }
@@ -118,7 +118,12 @@ export default function LandingPage(props) {
               setUserPW(e.target.value);
             }}
           />
-          <Button className={classes.signin} variant="outlined" size="small" onClick={handleLogin}>
+          <Button
+            className={classes.signin}
+            variant="outlined"
+            size="small"
+            onClick={handleLogin}
+          >
             Login
           </Button>
           <div className={classes.signup}>

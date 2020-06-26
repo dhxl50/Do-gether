@@ -69,8 +69,7 @@ app.post("/api/addcard", (req, res) => {
 
 app.put("/api/updatecard", (req, res) => {
   const data = req.body;
-  const sql =
-    `UPDATE CARDINFO SET title="${data.title}",todo="${data.todo}",ck="${data.ck}" WHERE name="${data.name}" AND date="${data.date}" AND time="${data.time}";`;
+  const sql = `UPDATE CARDINFO SET title="${data.title}",todo="${data.todo}",ck="${data.ck}" WHERE name="${data.name}" AND date="${data.date}" AND time="${data.time}";`;
   console.log(sql);
   connection.query(sql, (err, rows, fields) => {
     if (err) {
@@ -140,7 +139,7 @@ app.post("/api/login", (req, res) => {
         // console.log("error ocurred", error);
         res.send({
           code: 400,
-          failed: "error ocurred",
+          message: "error ocurred",
         });
       } else {
         // console.log('The solution is: ', results);
@@ -149,24 +148,23 @@ app.post("/api/login", (req, res) => {
             console.log(check);
             if (check) {
               req.session.userName = results[0].userName;
-              console.log( req.session.userName);
+              console.log(req.session.userName);
               res.send({
                 code: 200,
-                success: "login sucessfull",
-                username : results[0].userName
+                message: "login sucessfull",
+                username: results[0].userName,
               });
-              // res.redirect("/main");
             } else {
               res.send({
                 code: 204,
-                success: "Id and password does not match.",
+                message: "Id and password does not match.",
               });
             }
           });
         } else {
           res.send({
             code: 204,
-            success: "Id does not exists",
+            message: "Id does not exists",
           });
         }
       }
