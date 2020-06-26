@@ -100,16 +100,22 @@ export default function AddButton({ data, handleClose }) {
     }).then((response) => response.json());
   };
 
-  const checkAndClose = () => {
+  const deleteApi = (data) => {
+    return fetch("/api/deletecard", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }).then((response) => response.json());
+  };
+
+  const handleModify = () => {
     if (title === "") {
       alert("Please enter a title!");
     } else if (checkEemptyList(textList)) {
       alert("Please fill in the blank!");
     } else {
-      const initCK = Array.apply(null, Array(textList.length)).map(
-        Number.prototype.valueOf,
-        0
-      );
       modifyApi({
         isPublic: isPublic,
         name: localStorage["userName"],
@@ -117,13 +123,25 @@ export default function AddButton({ data, handleClose }) {
         time: data.time,
         title: title,
         todo: textList.join(","),
-        ck: initCK.join(","),
+        ck: data.ck,
       });
       handleClose();
       window.location.reload(false);
     }
   };
 
+  const handleDelete = () => {
+    deleteApi({
+      name: localStorage["userName"],
+      date: data.date,
+      time: data.time,
+    });
+    handleClose();
+    alert("Deleted Successfully!");
+    window.location.reload(false);
+  };
+
+  
   const checkEemptyList = (arr) => {
     if (arr.length === 0) {
       return 1;
@@ -136,21 +154,13 @@ export default function AddButton({ data, handleClose }) {
     return 0;
   };
 
-  const handleTitle = (e) => {
-    setTitle(e.target.value);
-  };
-
-  const handlePublic = () => {
-    setIsPublic(isPublic ? 0 : 1);
-  };
-
   const handleText = (e, idx) => {
     let tempArr = textList;
     tempArr[idx] = e.target.value;
     setTextList(tempArr);
   };
 
-  const handleAdd = () => {
+  const handleAddTODO = () => {
     if (textFieldBody.length < 5) {
       const idx = textFieldBody.length;
       setTextFieldBody([
@@ -175,24 +185,41 @@ export default function AddButton({ data, handleClose }) {
           </Typography>
           <FormControlLabel
             className={classes.isPublic}
-            control={<Checkbox onClick={handlePublic} />}
+            control={
+              <Checkbox
+                onClick={() => {
+                  setIsPublic(isPublic ? 0 : 1);
+                }}
+              />
+            }
             checked={isPublic}
             label="Public"
           />
 
           <form className={classes.input} noValidate autoComplete="off">
-            <TextField required label="Title" onChange={handleTitle} defaultValue={data.title}/>
+            <TextField
+              required
+              label="Title"
+              onChange={(e) => {
+                setTitle(e.target.value);
+              }}
+              defaultValue={data.title}
+            />
             {textFieldBody.map((field) => field)}
           </form>
-          <IconButton className={classes.addButton} onClick={handleAdd}>
+          <IconButton className={classes.addButton} onClick={handleAddTODO}>
             <AddIcon />
           </IconButton>
 
           <form className={classes.buttonGroup}>
-            <Button variant="contained" color="primary" onClick={checkAndClose}>
+            <Button variant="contained" color="primary" onClick={handleModify}>
               수정
             </Button>
-            <Button variant="contained" color="secondary" onClick={handleClose}>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={handleDelete}
+            >
               삭제
             </Button>
           </form>

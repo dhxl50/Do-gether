@@ -72,15 +72,6 @@ app.put("/api/updatecard", (req, res) => {
   const sql =
     `UPDATE CARDINFO SET title="${data.title}",todo="${data.todo}",ck="${data.ck}" WHERE name="${data.name}" AND date="${data.date}" AND time="${data.time}";`;
   console.log(sql);
-  // const params = [
-  //   data.isPublic,
-  //   data.name,
-  //   data.date,
-  //   data.time,
-  //   data.title,
-  //   data.todo,
-  //   data.ck,
-  // ];
   connection.query(sql, (err, rows, fields) => {
     if (err) {
       res.send({
@@ -98,19 +89,9 @@ app.put("/api/updatecard", (req, res) => {
 
 app.delete("/api/deletecard", (req, res) => {
   const data = req.body;
-  const sql =
-    "INSERT INTO CARDINFO(isPublic,name,date,time,title,todo,ck) VALUES(?,?,?,?,?,?,?);";
+  const sql = `DELETE FROM CARDINFO WHERE name="${data.name}" AND date="${data.date}" AND time="${data.time}";`;
 
-  const params = [
-    data.isPublic,
-    data.name,
-    data.date,
-    data.time,
-    data.title,
-    data.todo,
-    data.ck,
-  ];
-  connection.query(sql, params, (err, rows, fields) => {
+  connection.query(sql, (err, rows, fields) => {
     if (err) {
       res.send({
         code: 400,

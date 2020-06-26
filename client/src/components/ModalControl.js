@@ -90,13 +90,16 @@ export default function AddButton({ handleClose }) {
     }).then((response) => response.json());
   };
 
-  const checkAndClose = () => {
+  const handleAdd = () => {
     if (title === "") {
       alert("Please enter a title!");
     } else if (checkEemptyList(textList)) {
       alert("Please fill in the blank!");
     } else {
-      const initCK = Array.apply(null, Array(textList.length)).map(Number.prototype.valueOf,0);
+      const initCK = Array.apply(null, Array(textList.length)).map(
+        Number.prototype.valueOf,
+        0
+      );
       addApi({
         isPublic: isPublic,
         name: localStorage["userName"],
@@ -107,6 +110,7 @@ export default function AddButton({ handleClose }) {
         ck: initCK.join(","),
       });
       handleClose();
+      window.location.reload(false);
     }
   };
 
@@ -122,21 +126,13 @@ export default function AddButton({ handleClose }) {
     return 0;
   };
 
-  const handleTitle = (e) => {
-    setTitle(e.target.value);
-  };
-
-  const handlePublic = () => {
-    setIsPublic(isPublic ? 0 : 1);
-  };
-
   const handleText = (e, idx) => {
     let tempArr = textList;
     tempArr[idx] = e.target.value;
     setTextList(tempArr);
   };
 
-  const handleAdd = () => {
+  const handleAddTODO = () => {
     if (textFieldBody.length < 5) {
       const idx = textFieldBody.length;
       setTextFieldBody([
@@ -161,21 +157,33 @@ export default function AddButton({ handleClose }) {
           </Typography>
           <FormControlLabel
             className={classes.isPublic}
-            control={<Checkbox onClick={handlePublic} />}
+            control={
+              <Checkbox
+                onClick={() => {
+                  setIsPublic(isPublic ? 0 : 1);
+                }}
+              />
+            }
             checked={isPublic}
             label="Public"
           />
 
           <form className={classes.input} noValidate autoComplete="off">
-            <TextField required label="Title" onChange={handleTitle} />
+            <TextField
+              required
+              label="Title"
+              onChange={(e) => {
+                setTitle(e.target.value);
+              }}
+            />
             {textFieldBody.map((field) => field)}
           </form>
-          <IconButton className={classes.addButton} onClick={handleAdd}>
+          <IconButton className={classes.addButton} onClick={handleAddTODO}>
             <AddIcon />
           </IconButton>
 
           <form className={classes.buttonGroup}>
-            <Button variant="contained" color="primary" onClick={checkAndClose}>
+            <Button variant="contained" color="primary" onClick={handleAdd}>
               확인
             </Button>
             <Button variant="contained" color="secondary" onClick={handleClose}>

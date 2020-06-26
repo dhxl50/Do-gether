@@ -45,27 +45,25 @@ export default function TodoCard({ data, isMine }) {
   );
 
   const handleCheck = (idx) => {
-    if(localStorage["userName"]===data.name)
-    {
+    if (localStorage["userName"] === data.name) {
       let tempArr = checkState;
-    tempArr[idx] = tempArr[idx] ? 0 : 1;
-    setCheckState(tempArr);
-    setRender([]);
-    modifyApi({
-      isPublic: data.isPublic,
-      name: localStorage["userName"],
-      date: data.date,
-      time: data.time,
-      title: data.title,
-      todo: data.todo,
-      ck: tempArr.join(",")
-    });
-    
-    }else{
+      tempArr[idx] = tempArr[idx] ? 0 : 1;
+      setCheckState(tempArr);
+      data.ck=tempArr.join(",");
+      console.log(data);
+      setRender([]);
+      modifyApi({
+        isPublic: data.isPublic,
+        name: localStorage["userName"],
+        date: data.date,
+        time: data.time,
+        title: data.title,
+        todo: data.todo,
+        ck: tempArr.join(","),
+      });
+    } else {
       alert("You can't modify other people's list.");
     }
-    
-    
   };
 
   const modifyApi = (data) => {

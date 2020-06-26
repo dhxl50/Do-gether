@@ -23,6 +23,7 @@ export default function SettingButton({data, isMine }) {
 
   const handleOpen = () => {
     setOpen(true);
+    console.log(data);
   };
 
   const handleClose = () => {
