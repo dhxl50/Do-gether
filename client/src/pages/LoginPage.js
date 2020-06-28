@@ -91,6 +91,12 @@ export default function LandingPage(props) {
     }
   };
 
+  const checkEnter = ()=>{
+    if(window.event.keyCode == 13){
+      handleLogin();
+    }
+  }
+
   return (
     <div className={classes.root}>
       <Paper className={classes.paper} elevation={3}>
@@ -104,6 +110,7 @@ export default function LandingPage(props) {
             onChange={(e) => {
               setUserID(e.target.value);
             }}
+            onKeyUp={checkEnter}
           />
           <TextField
             className={classes.pwInput}
@@ -115,6 +122,7 @@ export default function LandingPage(props) {
             onChange={(e) => {
               setUserPW(e.target.value);
             }}
+            onKeyUp={checkEnter}
           />
           <Button
             className={classes.signin}
