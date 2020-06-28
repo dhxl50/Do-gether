@@ -81,6 +81,7 @@ export default function AddButton({ data, handleClose }) {
       return (
         <TextField
           required
+          key={idx}
           fullWidth={true}
           defaultValue={textList[idx]}
           label={"To do " + (idx + 1)}

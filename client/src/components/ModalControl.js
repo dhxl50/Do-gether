@@ -77,7 +77,7 @@ export default function AddButton({ handleClose }) {
   const [isPublic, setIsPublic] = useState(1);
   const [textList, setTextList] = useState([]);
   const [textFieldBody, setTextFieldBody] = useState([
-    <TextField required label="To do 1" onChange={(e) => handleText(e, 0)} />,
+    <TextField required key={0} label="To do 1" onChange={(e) => handleText(e, 0)} />,
   ]);
 
   const addApi = (data) => {
@@ -139,6 +139,7 @@ export default function AddButton({ handleClose }) {
         ...textFieldBody,
         <TextField
           required
+          key={idx}
           label={"To do " + (idx + 1)}
           onChange={(e) => handleText(e, idx)}
         />,

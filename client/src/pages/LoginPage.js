@@ -92,7 +92,7 @@ export default function LandingPage(props) {
   };
 
   const checkEnter = ()=>{
-    if(window.event.keyCode == 13){
+    if(window.event.keyCode === 13){
       handleLogin();
     }
   }

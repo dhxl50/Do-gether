@@ -105,6 +105,12 @@ export default function LandingPage(props) {
     }
   };
 
+  const checkEnter = ()=>{
+    if(window.event.keyCode === 13){
+      handleSubmit();
+    }
+  }
+
   return (
     <div className={classes.root}>
       <Paper className={classes.paper} elevation={3}>
@@ -119,6 +125,7 @@ export default function LandingPage(props) {
             onChange={(e) => {
               setUserID(e.target.value);
             }}
+            onKeyUp={checkEnter}
           />
           <TextField
             required
@@ -129,6 +136,7 @@ export default function LandingPage(props) {
             onChange={(e) => {
               setNickName(e.target.value);
             }}
+            onKeyUp={checkEnter}
           />
           <TextField
             required
@@ -141,6 +149,7 @@ export default function LandingPage(props) {
             onChange={(e) => {
               setUserPW(e.target.value);
             }}
+            onKeyUp={checkEnter}
           />
           <TextField
             required
@@ -160,6 +169,7 @@ export default function LandingPage(props) {
                 setMatchPW(false);
               }
             }}
+            onKeyUp={checkEnter}
           />
           <Button
             className={classes.submit}

@@ -67,7 +67,7 @@ export default function BodyLayout() {
   } else {
     return (
       <div className={classes.root}>
-        <Container className={classes.container} maxwidth="md">
+        <Container key="container" className={classes.container} maxwidth="md">
           <Grid className={classes.item} container>
             {data.map((card, idx) => {
               let isVisible = card.isPublic;
@@ -75,7 +75,11 @@ export default function BodyLayout() {
               const isMine = card.name === localStorage["userName"]; //remove item
               if (idx === 0 || card.date !== data[idx - 1].date) {
                 showDate = (
-                  <Typography key={idx} variant="h4" className={classes.date}>
+                  <Typography
+                    key={card.date}
+                    variant="h4"
+                    className={classes.date}
+                  >
                     {card.date}
                   </Typography>
                 );
@@ -89,9 +93,9 @@ export default function BodyLayout() {
                 return (
                   <>
                     {showDate}
-                    <Grid item xs={12} sm={6} md={3} key={idx+1}>
+                    <Grid item xs={12} sm={6} md={3} key={idx}>
                       <TodoCard
-                        key={idx}
+                        key={card.title}
                         data={card}
                         isVisible={isVisible}
                         isMine={isMine}
@@ -104,7 +108,7 @@ export default function BodyLayout() {
               }
             })}
           </Grid>
-          <AddButton key="addBtn"></AddButton>
+          <AddButton></AddButton>
         </Container>
       </div>
     );

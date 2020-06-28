@@ -45,7 +45,7 @@ Then you can simply:
 Reference from [`YARN`](https://yarnpkg.com/en/docs/install)
 <br>
 
-### Third, add "database.json"
+#### Third, add "database.json"
 you should add `database.json` in the following format.
 ```sh
 {

@@ -20,7 +20,26 @@ const connection = mysql.createConnection({
   port: conf.port,
   database: conf.database,
 });
-connection.connect();
+// connection.connect();
+function handleDisconnect() {
+  connection.connect(function (err) {
+    if (err) {
+      console.log("error when connecting to db:", err);
+      setTimeout(handleDisconnect, 4000);
+    }
+  });
+
+  connection.on("error", function (err) {
+    console.log("db error", err);
+    if (err.code === "PROTOCOL_CONNECTION_LOST") {
+      return handleDisconnect();
+    } else {
+      throw err;
+    }
+  });
+}
+
+handleDisconnect();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -30,8 +49,8 @@ app.use(
     resave: false,
     saveUninitialized: true,
     cookie: {
-      maxAge: 1000 * 60 * 60 // 쿠키 유효기간 24시간
-    }
+      maxAge: 1000 * 60 * 60, // 쿠키 유효기간 24시간
+    },
   })
 );
 
@@ -119,7 +138,7 @@ app.post("/api/signup", async (req, res) => {
       if (err) {
         res.send({
           code: 400,
-          message: "error",
+          message: "Change ID or NickName",
         });
       } else {
         res.send({
@@ -173,28 +192,28 @@ app.post("/auth/login", (req, res) => {
   );
 });
 
-app.get("/auth/logout", async (req,res,next) => {
-  console.log(req.session.userName+ "is logout");
+app.get("/auth/logout", async (req, res, next) => {
+  console.log(req.session.userName + "is logout");
   req.session.destroy();
-  res.clearCookie('sid');
+  res.clearCookie("sid");
   res.redirect("/");
-})
+});
 
-app.get("/auth", (req,res) =>{
-  try{
-    if(req.session.userName){
+app.get("/auth", (req, res) => {
+  try {
+    if (req.session.userName) {
       res.send({
-        message: "Authenticated user"
-      })
-    }else{
-      console.log("Unauthorized access")
+        message: "Authenticated user",
+      });
+    } else {
+      console.log("Unauthorized access");
       res.send({
-        message: "Unauthenticated user"
-      })
+        message: "Unauthenticated user",
+      });
     }
-  }catch(e){
+  } catch (e) {
     console.log(e);
   }
-})
+});
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
