@@ -24,6 +24,19 @@ const useStyles = makeStyles((theme) => ({
 export default function ButtonAppBar() {
   const classes = useStyles();
 
+  const handleLogout = ()=>{
+    fetch("/auth/logout",{
+      method: "GET",
+      headers : { 
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+       }
+    });
+    localStorage.removeItem("userName");
+    alert("Sucessfully logout!");
+    window.location.href = "/";
+  }
+
   return (
     <div className={classes.root}>
       <AppBar className={classes.bar} position="fixed">
@@ -31,7 +44,7 @@ export default function ButtonAppBar() {
           <Typography variant="h6" className={classes.title}>
             Do-gether
           </Typography>
-          <Button color="inherit" className={classes.logout}>Logout</Button>
+        <Button color="inherit" className={classes.logout} onClick={handleLogout}>Logout</Button>
         </Toolbar>
       </AppBar>
     </div>

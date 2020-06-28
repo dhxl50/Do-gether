@@ -62,7 +62,7 @@ export default function LandingPage(props) {
   const [userPW, setUserPW] = useState();
 
   const loginApi = (data) => {
-    return fetch("/api/login", {
+    return fetch("/auth/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -88,8 +88,6 @@ export default function LandingPage(props) {
         userID: userID,
         userPW: userPW,
       });
-      alert("Successfully login!");
-      props.history.push("/login");
     }
   };
 

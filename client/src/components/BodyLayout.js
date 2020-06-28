@@ -57,7 +57,6 @@ export default function BodyLayout() {
     callApi()
       .then((res) => {
         setData(res);
-        console.log(res);
         setIsLoading(0);
       })
       .catch((err) => console.log(err));
@@ -76,7 +75,7 @@ export default function BodyLayout() {
               const isMine = card.name === localStorage["userName"]; //remove item
               if (idx === 0 || card.date !== data[idx - 1].date) {
                 showDate = (
-                  <Typography variant="h4" className={classes.date}>
+                  <Typography key={idx} variant="h4" className={classes.date}>
                     {card.date}
                   </Typography>
                 );
@@ -90,9 +89,9 @@ export default function BodyLayout() {
                 return (
                   <>
                     {showDate}
-                    <Grid item xs={12} sm={6} md={3}>
+                    <Grid item xs={12} sm={6} md={3} key={idx+1}>
                       <TodoCard
-                        key={card.id}
+                        key={idx}
                         data={card}
                         isVisible={isVisible}
                         isMine={isMine}
@@ -105,7 +104,7 @@ export default function BodyLayout() {
               }
             })}
           </Grid>
-          <AddButton></AddButton>
+          <AddButton key="addBtn"></AddButton>
         </Container>
       </div>
     );

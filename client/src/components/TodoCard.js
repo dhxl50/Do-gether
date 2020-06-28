@@ -33,7 +33,6 @@ const useStyles = makeStyles({
 
 export default function TodoCard({ data, isMine }) {
   const classes = useStyles();
-  const [open, setOpen] = useState(false);
   const [render, setRender] = useState(0);
   const todo = data.todo.split(",").map((text) => {
     return text;
@@ -49,8 +48,7 @@ export default function TodoCard({ data, isMine }) {
       let tempArr = checkState;
       tempArr[idx] = tempArr[idx] ? 0 : 1;
       setCheckState(tempArr);
-      data.ck=tempArr.join(",");
-      console.log(data);
+      data.ck = tempArr.join(",");
       setRender([]);
       modifyApi({
         isPublic: data.isPublic,
@@ -96,9 +94,10 @@ export default function TodoCard({ data, isMine }) {
           {todo.map((item, idx) => {
             return (
               <FormControlLabel
+                key={idx}
                 className={classes.checkBox}
                 control={<Checkbox onClick={(e) => handleCheck(idx)} />}
-                checked={checkState[idx]}
+                checked={Boolean(checkState[idx])}
                 label={item}
               />
             );

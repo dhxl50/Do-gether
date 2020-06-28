@@ -29,11 +29,15 @@ app.use(
     secret: "asdjha!@#@#$dd",
     resave: false,
     saveUninitialized: true,
+    cookie: {
+      maxAge: 1000 * 60 * 60 // 쿠키 유효기간 24시간
+    }
   })
 );
 
 app.get("/api/cards", (req, res) => {
   connection.query("SELECT * FROM CARDINFO", (err, rows, fields) => {
+    // console.log(rows);
     res.send(rows);
   });
 });
@@ -127,7 +131,7 @@ app.post("/api/signup", async (req, res) => {
   });
 });
 
-app.post("/api/login", (req, res) => {
+app.post("/auth/login", (req, res) => {
   const data = req.body;
   const enteredID = data.userID;
   const enteredPW = data.userPW;
@@ -136,19 +140,16 @@ app.post("/api/login", (req, res) => {
     [enteredID],
     function (error, results, fields) {
       if (error) {
-        // console.log("error ocurred", error);
         res.send({
           code: 400,
           message: "error ocurred",
         });
       } else {
-        // console.log('The solution is: ', results);
         if (results.length > 0) {
           bcrypt.compare(enteredPW, results[0].userPW, function (err, check) {
-            console.log(check);
             if (check) {
               req.session.userName = results[0].userName;
-              console.log(req.session.userName);
+              console.log(req.session.userName + "is login");
               res.send({
                 code: 200,
                 message: "login sucessfull",
@@ -171,4 +172,29 @@ app.post("/api/login", (req, res) => {
     }
   );
 });
+
+app.get("/auth/logout", async (req,res,next) => {
+  console.log(req.session.userName+ "is logout");
+  req.session.destroy();
+  res.clearCookie('sid');
+  res.redirect("/");
+})
+
+app.get("/auth", (req,res) =>{
+  try{
+    if(req.session.userName){
+      res.send({
+        message: "Authenticated user"
+      })
+    }else{
+      console.log("Unauthorized access")
+      res.send({
+        message: "Unauthenticated user"
+      })
+    }
+  }catch(e){
+    console.log(e);
+  }
+})
+
 app.listen(port, () => console.log(`Listening on port ${port}`));
