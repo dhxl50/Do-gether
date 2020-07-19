@@ -1,17 +1,25 @@
-# Do-gether
+# About The Project
 ---
+### Do-gether
 Sharing your TODO-LIST with others!<br>
 Do-gether은 투두리스트를 다른사람들과 공유할 수 있도록 도와주는 동기부여 서비스입니다.
 <br><br>
 
-## HOW TO USE
+### Bulit With
+- React
+- Material-ui
+- Node.js
+- Mysql
+- Unsplash Image API
+
+# HOW TO USE
 ---
 You can come here and use DO-GETHER.<br>
-[`http://wwww.dogether.tk`](http://wwww.dogether.tk)
+[`http://www.dogether.tk`](http://www.dogether.tk)
 ![main](/uploads/9dce27e61dc8a02f8fe0ab37dfaf4df5/main.png)
 <br><br>
 
-## HOW TO INSTALL
+# HOW TO INSTALL
 ---
 #### First, clone this project
 `git clone http://khuhub.khu.ac.kr/2019102153/Do-gether.git`
@@ -72,12 +80,12 @@ And change the `disableHostCheck: ...` option to `disableHostCheck: true`.
 ![error](/uploads/be3c1c269c2ee157825f6d9e143706fc/error.png)
 <br><br>
 
-## Presentation File
+# Presentation File
 ---
 You can check my presentation here.
 [2019102153_김대휘.pptx](/uploads/ec22aec2c186128329918ec641a54f73/2019102153_김대휘.pptx)
 <br><br>
 
-## LISENCE
+# LISENCE
 ---
 Do-gether is free software, and may be redistributed under the terms specified in the [MIT LICENSE](http://khuhub.khu.ac.kr/2019102153/Do-gether/blob/master/LICENSE.txt) file.
